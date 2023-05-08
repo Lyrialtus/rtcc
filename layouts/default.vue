@@ -29,6 +29,8 @@ import { useTheme } from 'vuetify'
 import { mdiThemeLightDark } from '@mdi/js'
 
 const theme = useTheme()
+// Theme flickering in prod
+theme.global.name.value = 'dark'
 const toggleTheme = () => {
   theme.global.name.value = theme.global.current.value.dark ? 'light' : 'dark'
 }
