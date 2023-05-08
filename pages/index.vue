@@ -146,16 +146,22 @@ const setupSocket = () => {
       }
       return
     }
-    const newPrice = data.c || data.p
-    if (newPrice > price.value) {
-      dynamicColor.value = 'green'
-    } else if (newPrice < price.value) {
-      dynamicColor.value = 'red'
-    } else {
-      dynamicColor.value = 'on-surface-variant'
+    if (selected.value) {
+      updatePrice(data)
     }
-    price.value = newPrice
   }
+}
+
+const updatePrice = (data) => {
+  const newPrice = data.c || data.p
+  if (newPrice > price.value) {
+    dynamicColor.value = 'green'
+  } else if (newPrice < price.value) {
+    dynamicColor.value = 'red'
+  } else {
+    dynamicColor.value = 'on-surface-variant'
+  }
+  price.value = newPrice
 }
 
 const checkStreams = () => {

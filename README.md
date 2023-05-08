@@ -12,4 +12,4 @@ Another attempt to do the `Nuxt 3 + Vuetify 3` thing. It just shows the price fo
 
 ### [Live Demo](https://rtcc.vercel.app/)
 
-This is a static version (`nuxt generate`) hosted on Vercel.
+This is a static (`nuxt generate`) version of the app hosted on Vercel. But both SSG and SSR work pretty much the same for something so unsophisticated.
