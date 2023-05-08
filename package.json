@@ -15,10 +15,8 @@
     "@types/node": "^18",
     "eslint": "^8.40.0",
     "nuxt": "^3.4.3",
-    "vite-plugin-vuetify": "^1.0.2"
-  },
-  "dependencies": {
     "sass": "^1.62.1",
+    "vite-plugin-vuetify": "^1.0.2",
     "vuetify": "^3.2.2"
   }
 }

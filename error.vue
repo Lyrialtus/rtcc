@@ -11,7 +11,7 @@
             class="ma-6"
           >
             <div class="d-flex flex-row align-center justify-space-between">
-              {{ error.statusCode }} - {{ error.statusMessage }}
+              {{ error.statusCode }} - {{ error.statusMessage || error.message }}
               <v-btn variant="outlined" @click="handleError">
                 Go Home
               </v-btn>

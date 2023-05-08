@@ -15,6 +15,7 @@
           <v-autocomplete
             v-model="selected"
             v-model:search="search"
+            :loading="loading"
             :items="items"
             label="Crypto pair (Binance symbol)"
             placeholder="e.g. BTCUSDT"
@@ -44,11 +45,9 @@
 <script setup>
 import { mdiArrowRight } from '@mdi/js'
 
-const apiLink = 'https://api.binance.com/api/v3/ticker/price'
-const { data: allPrices } = await useFetch(apiLink)
-const allSymbols = allPrices.value.map(item => item.symbol)
-
 let socket = null
+let allPrices = []
+let allSymbols = []
 let items = []
 let timeoutID = null
 let resultDisplay = null
@@ -57,6 +56,7 @@ let resultDisplay = null
 const amount = ref(1)
 const selected = ref(null)
 const search = ref(null)
+const loading = ref(true)
 const price = ref(null)
 const dynamicColor = ref('on-surface-variant')
 
@@ -67,10 +67,31 @@ const result = computed(() => {
   return amount.value * price.value
 })
 
-onMounted(() => {
+onMounted(async () => {
   resultDisplay = document.querySelector('#rt-price')
   setupSocket()
+
+  // More SSR-friendly, I guess
+  const apiLink = 'https://api.binance.com/api/v3/ticker/price'
+  const { data, pending, error, refresh } = await useFetch(apiLink)
+  if (error.value) {
+    throw error.value
+  }
+  if (pending.value) {
+    watch(data, (value) => {
+      finishSetup(value)
+    })
+    refresh()
+  } else {
+    finishSetup(data.value)
+  }
 })
+
+const finishSetup = (data) => {
+  allPrices = data
+  allSymbols = data.map(item => item.symbol)
+  loading.value = false
+}
 
 watch(amount, (number) => {
   if (number < 0) {
@@ -103,7 +124,7 @@ watch(search, (query) => {
 watch(selected, (symbol) => {
   checkStreams()
   if (symbol) {
-    price.value = allPrices.value.find(item => item.symbol === symbol).price
+    price.value = allPrices.find(item => item.symbol === symbol).price
     dynamicColor.value = 'on-surface-variant'
     subscribe(symbol.toLowerCase())
   } else {
