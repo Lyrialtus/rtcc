@@ -6,13 +6,13 @@
           <v-alert
             prominent
             type="error"
-            color="info"
+            color="no"
             variant="outlined"
             class="ma-6"
           >
             <div class="d-flex flex-row align-center justify-space-between">
-              {{ error.statusCode }} - {{ error.statusMessage || error.message }}
-              <v-btn variant="outlined" @click="handleError">
+              {{ errorMessage }}
+              <v-btn v-if="showButton" variant="outlined" @click="handleError">
                 Go Home
               </v-btn>
             </div>
@@ -24,12 +24,18 @@
 </template>
 
 <script setup>
-defineProps({
+const props = defineProps({
   error: {
     type: Object,
     default: null
   }
 })
 
+const errorMessage = computed(() => {
+  const plug = 'An error occurred'
+  const message = props.error.statusMessage || props.error.message || plug
+  return `${props.error.statusCode} - ${message}`
+})
+const showButton = computed(() => props.error.url !== '/')
 const handleError = () => clearError({ redirect: '/' })
 </script>

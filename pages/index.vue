@@ -69,9 +69,9 @@ const result = computed(() => {
 
 onMounted(async () => {
   resultDisplay = document.querySelector('#rt-price')
+
   setupSocket()
 
-  // More SSR-friendly, I guess
   const apiLink = 'https://api.binance.com/api/v3/ticker/price'
   const { data, pending, error, refresh } = await useFetch(apiLink)
   if (error.value) {

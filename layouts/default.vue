@@ -4,7 +4,13 @@
     <v-main>
       <v-toolbar color="surface" class="elevation-6">
         <NuxtLink to="/">
-          <img src="/logo.svg" height="42" class="ml-3" alt="Totally not Binance logo">
+          <img
+            src="/logo.svg"
+            height="42"
+            width="42"
+            class="ml-3 mt-1"
+            alt="Totally not the Binance logo"
+          >
         </NuxtLink>
         <v-app-bar-title class="d-none d-sm-flex">
           Real-Time Crypto Converter
@@ -15,7 +21,7 @@
         <noscript>
           JavaScript is required!
         </noscript>
-        <v-btn icon variant="outlined" @click="toggleTheme">
+        <v-btn icon variant="outlined" color="info" @click="toggleTheme">
           <v-icon :icon="mdiThemeLightDark" />
         </v-btn>
       </v-toolbar>
